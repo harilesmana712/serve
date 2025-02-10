@@ -54,8 +54,8 @@ export default {
   data() {
     return {
       apiBaseUrl: "https://https://server-delta-dun.vercel.app//api/",
-      username: localStorage.getItem("username") || "",
-      password: "",
+      username: "admin",
+      password: "root",
       loggedIn: localStorage.getItem("loggedIn") === "true",
       status: "Disconnected",
       qrCode: null,
@@ -75,8 +75,8 @@ export default {
     async login() {
       try {
         const res = await axios.post(`${this.apiBaseUrl}login`, {
-          username: admin,
-          password: root,
+          username: this.username,
+          password: this.password,
         });
         if (res.data.success) {
           this.loggedIn = true;
