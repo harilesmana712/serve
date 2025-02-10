@@ -53,6 +53,7 @@ export default {
   components: { QrcodeVue },
   data() {
     return {
+      apiBaseUrl: "https://peaceful-radiance-production.up.railway.app/api/",
       username: localStorage.getItem("username") || "",
       password: "",
       loggedIn: localStorage.getItem("loggedIn") === "true",
@@ -73,7 +74,7 @@ export default {
   methods: {
     async login() {
       try {
-        const res = await axios.post("http://localhost/login", {
+        const res = await axios.post(`${this.apiBaseUrl}login`, {
           username: this.username,
           password: this.password,
         });
@@ -99,7 +100,7 @@ export default {
     async startBot() {
       this.status = "Starting...";
       try {
-        const res = await axios.get("http://localhost/start-bot");
+        const res = await axios.get(`${this.apiBaseUrl}start-bot`);
         if (res.data.success) {
           this.pollQR();
           this.pollStatus();
@@ -112,7 +113,7 @@ export default {
     },
     async checkStatus() {
       try {
-        const res = await axios.get("http://localhost/status-bot");
+        const res = await axios.get(`${this.apiBaseUrl}status-bot`);
         if (res.data.success) {
           this.status = "Running";
           this.pollMessages(); // Mulai monitoring pesan
@@ -124,7 +125,7 @@ export default {
     async pollMessages() {
       setInterval(async () => {
         try {
-          const res = await axios.get("http://localhost/get-messages");
+          const res = await axios.get(`${this.apiBaseUrl}get-messages`);
           if (res.data.success) {
             this.messages = res.data.messages;
           }
