@@ -3,13 +3,7 @@
     <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
       <h1 class="text-2xl font-bold text-center mb-4">WhatsApp Bot Settings</h1>
 
-      <div v-if="!loggedIn" class="space-y-3">
-        <input v-model="username" placeholder="Username" class="border p-2 w-full rounded focus:ring-2 focus:ring-blue-400" />
-        <input v-model="password" type="password" placeholder="Password" class="border p-2 w-full rounded focus:ring-2 focus:ring-blue-400" />
-        <button @click="login" class="bg-blue-500 hover:bg-blue-600 text-white p-2 w-full rounded transition-all duration-300">Login</button>
-      </div>
-
-      <div v-else>
+      <div>
         <div class="text-center my-4">
           <span class="text-lg font-semibold">Status: </span>
           <span :class="statusClass">{{ status }}</span>
@@ -18,8 +12,6 @@
         <button v-if="status !== 'Running'" @click="startBot" class="bg-green-500 hover:bg-green-600 text-white p-2 mt-2 rounded w-full transition-all duration-300">
           Start Bot
         </button>
-
-        <button @click="logout" class="bg-gray-500 hover:bg-gray-600 text-white p-2 mt-2 rounded w-full transition-all duration-300">Logout</button>
 
         <!-- QR Code -->
         <div v-if="qrCode" class="text-center mt-6">
@@ -53,10 +45,7 @@ export default {
   components: { QrcodeVue },
   data() {
     return {
-      apiBaseUrl: "https://https://server-delta-dun.vercel.app//api/",
-      username: "admin",
-      password: "root",
-      loggedIn: localStorage.getItem("loggedIn") === "true",
+      apiBaseUrl: "https://server-delta-dun.vercel.app/api/",
       status: "Disconnected",
       qrCode: null,
       messages: [],
@@ -72,31 +61,6 @@ export default {
     },
   },
   methods: {
-    async login() {
-      try {
-        const res = await axios.post(`${this.apiBaseUrl}login`, {
-          username: this.username,
-          password: this.password,
-        });
-        if (res.data.success) {
-          this.loggedIn = true;
-          localStorage.setItem("username", this.username);
-          localStorage.setItem("loggedIn", "true");
-          this.checkStatus();
-        } else {
-          alert("Login failed");
-        }
-      } catch (error) {
-        alert("Error during login");
-      }
-    },
-    async logout() {
-      localStorage.removeItem("username");
-      localStorage.removeItem("loggedIn");
-      this.loggedIn = false;
-      this.username = "";
-      this.password = "";
-    },
     async startBot() {
       this.status = "Starting...";
       try {
@@ -136,9 +100,7 @@ export default {
     },
   },
   created() {
-    if (this.loggedIn) {
-      this.checkStatus();
-    }
+    this.checkStatus();
   },
 };
 </script>
