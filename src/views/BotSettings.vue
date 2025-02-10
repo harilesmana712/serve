@@ -45,7 +45,7 @@ export default {
   components: { QrcodeVue },
   data() {
     return {
-      apiBaseUrl: "https://server-delta-dun.vercel.app/api/",
+      apiBaseUrl: "content-balance-production.up.railway.app/",
       status: "Disconnected",
       qrCode: null,
       messages: [],
