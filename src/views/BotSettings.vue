@@ -75,8 +75,8 @@ export default {
     async login() {
       try {
         const res = await axios.post(`${this.apiBaseUrl}login`, {
-          username: this.username,
-          password: this.password,
+          username: admin,
+          password: root,
         });
         if (res.data.success) {
           this.loggedIn = true;
