@@ -53,7 +53,7 @@ export default {
   components: { QrcodeVue },
   data() {
     return {
-      apiBaseUrl: "https://peaceful-radiance-production.up.railway.app/api/",
+      apiBaseUrl: "https://https://server-delta-dun.vercel.app//api/",
       username: localStorage.getItem("username") || "",
       password: "",
       loggedIn: localStorage.getItem("loggedIn") === "true",
